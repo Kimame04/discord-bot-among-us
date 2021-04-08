@@ -1,4 +1,4 @@
-#Amogus Bot
+# Amogus Bot
 
 Tired of your friends making too many Among Us references? Hoping that they could at least keep quiet? Then Amogus Bot is here for you!
 
