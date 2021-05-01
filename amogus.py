@@ -8,7 +8,6 @@ whats = []
 names = []
 fines = {}
 TOKEN = ''
-
 code = 'No code'
 
 def get_key(val):
@@ -26,8 +25,6 @@ def fetchData():
         banned = file.read().split(',')[:-1]
     with open('whats_this.txt','r') as file1:
         whats = file1.read().split(',')[:-1]
-    with open('token.txt','r') as file2:
-        TOKEN = file2.read()[0]
 
 def appendData(string):
     with open('banned.txt','a') as file:
@@ -50,9 +47,12 @@ async def smh(ctx):
 
 @bot.command(name='addword')
 async def addword(ctx,arg1):
-    #banned.append(arg1)
-    appendData(arg1)
-    await ctx.send('Gamer word added')
+    if ctx.author.name == 'Kimame_04':
+        banned.append(arg1)
+        appendData(arg1)
+        await ctx.send('Gamer word added')
+    else:
+        await ctx.send('Only Kieran is allowed to add words, sucks to be you!')
 
 @bot.command(name='checkfine')
 async def checkfine(ctx):
@@ -84,14 +84,14 @@ async def on_message(message):
             fines[message.author.name] = 1
         else:
             fines[message.author.name] += 1
-        await message.channel.send('You have breached the 1-week Amogus ban. Please pay $0.50 to the class fund\n'+  'Total fine for ' + message.author.name + ': $' + str(fines[message.author.name]*0.5))
+        await message.channel.send('You have breached the 1-week Amogus ban. Please pay $0.50 to the class fund.\n') #+  'Total fine for ' + message.author.name + ': $' + str(fines[message.author.name]*0.5)
 
     if bool([ele for ele in whats if (ele in message.content.lower())]):
         await message.channel.send('What\'s this?')
-
-    if 'vishagan' in message.content.lower():
-        await message.channel.send('Sending macs')
         
     await bot.process_commands(message)
 
-bot.run(TOKEN)
+if __name__ == '__main__':
+    with open('token.txt','r') as file2:
+        TOKEN = file2.read()
+    bot.run(TOKEN)
